@@ -1,54 +1,38 @@
 package com.justai.jaicf.template.scenario
 
-import com.justai.jaicf.activator.caila.caila
 import com.justai.jaicf.model.scenario.Scenario
+import com.justai.jaicf.template.Consequence
 
-object MainScenario : Scenario() {
+object MainScenario : Scenario(dependencies = listOf(QuestScenario)) {
 
     init {
         state("start") {
             activators {
                 regex("/start")
-                intent("Hello")
             }
             action {
-                reactions.run {
-                    image("https://media.giphy.com/media/ICOgUNjpvO0PC/source.gif")
-                    sayRandom(
-                        "Hello! How can I help?",
-                        "Hi there! How can I help you?"
-                    )
-                    buttons(
-                        "Help me!",
-                        "How are you?",
-                        "What is your name?"
-                    )
+                reactions.say("Привет! Маленький дисклеймер: этот навык не призывает к ковид-диссиденству. " +
+                        "Он создавался только в развлекательных целях " +
+                        "и не пропагандирует халатное отношение к мерам безопасности. " +
+                        "Пожалуйста, будьте ответственны.")
+                reactions.say("Начнем?")
+            }
+
+
+            state("letsgo") {
+                activators {
+                    regex("да")
                 }
-            }
-        }
 
-        state("bye") {
-            activators {
-                intent("Bye")
-            }
-
-            action {
-                reactions.sayRandom(
-                    "See you soon!",
-                    "Bye-bye!"
-                )
-                reactions.image("https://media.giphy.com/media/EE185t7OeMbTy/source.gif")
-            }
-        }
-
-        state("smalltalk", noContext = true) {
-            activators {
-                anyIntent()
-            }
-
-            action {
-                activator.caila?.topIntent?.answer?.let {
-                    reactions.say(it)
+                action {
+                    val stateInfo = Controller(context)
+                    stateInfo.dissidentScore = 50
+                    stateInfo.sectantScore = 50
+                    stateInfo.currentConsequence = Consequence(0, 0, "", null)
+                    reactions.say("В мире пандемия COVID-19. От нас - ситуации, от вас - ответ \"да\" или \"нет\". " +
+                            "Сохраняйте баланс между ковид-диссиденством и слепым фанатизмом. " +
+                            "Главное - ваш ментальный баланс. Начинаем.")
+                    reactions.go("/caseStart")
                 }
             }
         }

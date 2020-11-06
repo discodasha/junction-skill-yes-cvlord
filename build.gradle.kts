@@ -30,6 +30,9 @@ dependencies {
     implementation("com.justai.jaicf:core:$jaicf")
     implementation("com.justai.jaicf:jaicp:$jaicf")
     implementation("com.justai.jaicf:caila:$jaicf")
+    api("com.justai.jaicf:aimybox:$jaicf")
+    api("com.justai.jaicf:telegram:$jaicf")
+    api("com.justai.jaicf:yandex-alice:$jaicf")
 }
 
 tasks {
