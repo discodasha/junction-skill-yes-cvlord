@@ -2,6 +2,7 @@ package com.justai.jaicf.template.scenario
 
 import com.justai.jaicf.model.scenario.Scenario
 import com.justai.jaicf.template.Consequence
+import com.justai.jaicf.template.questCases
 
 object MainScenario : Scenario(dependencies = listOf(QuestScenario)) {
 
@@ -26,6 +27,7 @@ object MainScenario : Scenario(dependencies = listOf(QuestScenario)) {
 
                 action {
                     val stateInfo = Controller(context)
+                    stateInfo.currentSituation = questCases.getRandomSituation()
                     stateInfo.dissidentScore = 50
                     stateInfo.sectantScore = 50
                     stateInfo.currentConsequence = Consequence(0, 0, "", null)

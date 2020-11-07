@@ -1,11 +1,10 @@
 package com.justai.jaicf.template.scenario
 
+import com.justai.jaicf.channel.aimybox.aimybox
 import com.justai.jaicf.model.scenario.Scenario
-import com.justai.jaicf.template.QuestCases
 import com.justai.jaicf.template.StatusChange
+import com.justai.jaicf.template.questCases
 
-
-val questCases =  QuestCases()
 
 object QuestScenario : Scenario() {
 
@@ -16,7 +15,7 @@ object QuestScenario : Scenario() {
             action {
                 //
                 val stateInfo = Controller(context)
-                stateInfo.currentSituation = questCases.getSituation()
+
                 reactions.say(stateInfo.currentSituation.text)
             }
 
@@ -89,7 +88,10 @@ object QuestScenario : Scenario() {
                     reactions.say("$replyDissident, ${stateInfo.dissidentScore}")
                     reactions.say("$replySectant, ${stateInfo.sectantScore}")
 
-                    reactions.go("/caseStart")
+                    if (stateInfo.currentConsequence.transition == null)
+                        stateInfo.currentSituation = questCases.getRandomSituation()
+                    else
+                        stateInfo.currentSituation = questCases.getNextSituation(stateInfo)
                 }
             }
 
@@ -100,23 +102,43 @@ object QuestScenario : Scenario() {
 
 
 
-            state ("стейт для проигрыша 1") {
-
+            state ("TOO_MUCH_DISSIDENT") {
+                action {
+                    reactions.say("Ваш уровень диссиденства стал настолько высок, " +
+                            "что Билл Гейтс не смог это не заметить и вылетел вас чипировать. Чик-чик, голубчик.")
+                    reactions.aimybox?.endConversation()
+                    reactions.go("/")
+                }
             }
 
 
-            state ("стейт для проигрыша 2") {
-
+            state ("TOO_LITTLE_DISSIDENT") {
+                action {
+                    reactions.say("Кажется, вы превратились в фанатичного сектанта!" +
+                            " Осторожнее с антисептиком - ваши руки могут раствориться от такого количества спирта.")
+                    reactions.aimybox?.endConversation()
+                    reactions.go("/")
+                }
             }
 
 
-            state ("стейт для проигрыша 3") {
-
+            state ("TOO_MUCH_SECTANT") {
+                action {
+                    reactions.say("У-у-у, уважаемый, полегче! " +
+                            "Если так пойдет дальше, то ваша психика не выдержит и ... Но давайте не будем о грустном.")
+                    reactions.aimybox?.endConversation()
+                    reactions.go("/")
+                }
             }
 
 
-            state ("стейт для проигрыша 4") {
-
+            state ("TOO_LITTLE_SECTANT") {
+                action {
+                    reactions.say("Кажется, вы всё-таки оказались диким диссидентом... " +
+                            "Остоновитесь, подумойте, а то вышки 5G на ваш порадиоактивят и всё!")
+                    reactions.aimybox?.endConversation()
+                    reactions.go("/")
+                }
             }
         }
 
