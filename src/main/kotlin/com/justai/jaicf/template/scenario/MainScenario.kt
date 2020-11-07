@@ -28,7 +28,7 @@ object MainScenario : Scenario(dependencies = listOf(QuestScenario)) {
 
                 action {
                     val stateInfo = Controller(context)
-                    stateInfo.currentSituation = questCases.getRandomSituation()
+                    stateInfo.currentSituation = questCases.getRandomSituation()!!
                     stateInfo.dissidentScore = 50
                     stateInfo.sectantScore = 50
                     stateInfo.currentConsequence = Consequence(0, 0, "", null)
