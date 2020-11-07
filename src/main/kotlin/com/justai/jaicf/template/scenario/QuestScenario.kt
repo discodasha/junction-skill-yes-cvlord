@@ -10,12 +10,11 @@ object QuestScenario : Scenario() {
 
     init {
 
-        state("caseStart") {
+        state("cases") {
 
             action {
                 //
                 val stateInfo = Controller(context)
-
                 reactions.say(stateInfo.currentSituation.text)
             }
 
@@ -29,7 +28,7 @@ object QuestScenario : Scenario() {
                     val stateInfo = Controller(context)
                     stateInfo.currentConsequence = stateInfo.currentSituation.yesVariant
                     stateInfo.updateScores()
-                    reactions.go("/caseStart/handler")
+                    reactions.go("/cases/handler")
 
                 }
             }
@@ -44,7 +43,7 @@ object QuestScenario : Scenario() {
                     val stateInfo = Controller(context)
                     stateInfo.currentConsequence = stateInfo.currentSituation.noVariant
                     stateInfo.updateScores()
-                    reactions.go("/caseStart/handler")
+                    reactions.go("/cases/handler")
                 }
             }
 
@@ -56,20 +55,20 @@ object QuestScenario : Scenario() {
                     val sectantStatus = getSectantStatus(stateInfo.dissidentScore, stateInfo.currentConsequence)
 
                     if (dissidentStatus == StatusChange.TOO_LITTLE) {
-                        reactions.go("Хуячим в проигрыш")
+                        reactions.go("/cases/TOO_LITTLE_DISSIDENT")
                         return@action
                     }
                     if (dissidentStatus == StatusChange.TOO_MUCH) {
-                        reactions.go("Тоже хуячим в проигрыш")
+                        reactions.go("/cases/TOO_MUCH_DISSIDENT")
                         return@action
                     }
 
                     if (sectantStatus == StatusChange.TOO_LITTLE) {
-                        reactions.go("Хуячим в проигрыш")
+                        reactions.go("/cases/TOO_LITTLE_SECTANT")
                         return@action
                     }
                     if (sectantStatus == StatusChange.TOO_MUCH) {
-                        reactions.go("Тоже хуячим в проигрыш")
+                        reactions.go("/cases/TOO_MUCH_SECTANT")
                         return@action
                     }
 
@@ -87,8 +86,8 @@ object QuestScenario : Scenario() {
                         else -> null
                     }
 
-                    reactions.say("$replyDissident, ${stateInfo.dissidentScore}")
-                    reactions.say("$replySectant, ${stateInfo.sectantScore}")
+                    reactions.say("Ваш $replyDissident,  ${stateInfo.dissidentScore}.")
+                    reactions.say("$replySectant, ваш уровень фанатизма - ${stateInfo.sectantScore}.")
 
                     if (stateInfo.currentConsequence.transition == null) {
                         val s = questCases.getRandomSituation()
@@ -98,13 +97,16 @@ object QuestScenario : Scenario() {
                             reactions.say("Вы - мастер выживания и морального спокойствия! " +
                                     "Просто представьте, сколько денег вы сэкономили на психотерапевтах и психиатрах! " +
                                     "Поздравляю с победой, многоуважаемый!")
+                            reactions.say("Вы на ${stateInfo.dissidentScore}% диссидент.")
                             reactions.aimybox?.endConversation()
-                            reactions.go("/")
+                            reactions.go("/end")
+                            return@action
                         }
                     }
-
                     else
                         stateInfo.currentSituation = questCases.getNextSituation(stateInfo)
+
+                    reactions.go("/cases")
                 }
             }
 

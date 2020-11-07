@@ -28,15 +28,35 @@ object MainScenario : Scenario(dependencies = listOf(QuestScenario)) {
 
                 action {
                     val stateInfo = Controller(context)
-                    stateInfo.currentSituation = questCases.getRandomSituation()
+                    stateInfo.currentSituation = questCases.getRandomSituation()!!
                     stateInfo.dissidentScore = 50
                     stateInfo.sectantScore = 50
                     stateInfo.currentConsequence = Consequence(0, 0, "", null)
                     reactions.say("В мире пандемия COVID-19. От нас - ситуации, от вас - ответ \"да\" или \"нет\". " +
                             "Сохраняйте баланс между ковид-диссиденством и слепым фанатизмом. " +
                             "Главное - ваш ментальный баланс. Начинаем.")
-                    reactions.go("/caseStart")
+                    reactions.go("/cases")
                 }
+            }
+        }
+
+        state("end"){
+            action {
+                reactions.say("Хотите заново начать?")
+            }
+
+            state("yes") {
+                activators {
+                    intent("Yes")
+                }
+
+                action {
+                    reactions.go("start")
+                }
+            }
+
+            fallback {
+                reactions.say("Захотите начать заново - /start и всё завертится сначала!")
             }
         }
 
