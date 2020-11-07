@@ -1,8 +1,9 @@
 package com.justai.jaicf.template
 
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
+import com.justai.jaicf.template.scenario.MainScenario
 
-private const val GAME_DATA_FILE = "src/main/resources/game-data.csv"
+private val GAME_DATA_FILE = MainScenario::class.java.getResource("/game-data.csv").file
 private const val SCORE_DELIMITER = "/"
 
 private const val ID_COL = 0
