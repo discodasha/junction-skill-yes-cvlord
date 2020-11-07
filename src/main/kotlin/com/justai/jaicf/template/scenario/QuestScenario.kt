@@ -16,6 +16,7 @@ object QuestScenario : Scenario() {
                 //
                 val stateInfo = Controller(context)
                 reactions.say("")
+                reactions.say(stateInfo.currentSituation.text)
                 reactions.telegram?.say(stateInfo.currentSituation.text, listOf("Да", "Нет"))
             }
 
