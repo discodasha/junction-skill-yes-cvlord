@@ -25,16 +25,23 @@ enum class StatusChange {
 }
 
 class QuestCases() {
-    private val usedCases = listOf<Int>()
+    private val usedCases = mutableListOf<Int>()
     private val dateset = listOf(Situation(0,"1111", "1111", cons1, cons2)) // TODO - init!
 
-    fun getRandomSituation(): Situation {
-        return dateset
+    fun getRandomSituation(): Situation? {
+        if (usedCases.size == dateset.size) {
+            return null
+        }
+
+        val situation = dateset
             .filter { usedCases.indexOf(it.id) == -1 }
             .random()
+        usedCases.add(situation.id)
+        return situation
     }
 
     fun getNextSituation(currentStateInfo: Controller): Situation {
+        usedCases.add(currentStateInfo.currentConsequence.transition!!)
         return dateset.first { it.id == currentStateInfo.currentConsequence.transition }
     }
 

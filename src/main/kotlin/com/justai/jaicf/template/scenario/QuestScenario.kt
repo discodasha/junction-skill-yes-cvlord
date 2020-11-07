@@ -88,8 +88,19 @@ object QuestScenario : Scenario() {
                     reactions.say("$replyDissident, ${stateInfo.dissidentScore}")
                     reactions.say("$replySectant, ${stateInfo.sectantScore}")
 
-                    if (stateInfo.currentConsequence.transition == null)
-                        stateInfo.currentSituation = questCases.getRandomSituation()
+                    if (stateInfo.currentConsequence.transition == null) {
+                        val s = questCases.getRandomSituation()
+                        if (s != null)
+                            stateInfo.currentSituation = s
+                        else {
+                            reactions.say("Вы - мастер выживания и морального спокойствия! " +
+                                    "Просто представьте, сколько денег вы сэкономили на психотерапевтах и психиатрах! " +
+                                    "Поздравляю с победой, многоуважаемый!")
+                            reactions.aimybox?.endConversation()
+                            reactions.go("/")
+                        }
+                    }
+
                     else
                         stateInfo.currentSituation = questCases.getNextSituation(stateInfo)
                 }
