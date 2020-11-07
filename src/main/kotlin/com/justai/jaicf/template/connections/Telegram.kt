@@ -5,5 +5,5 @@ import com.justai.jaicf.template.templateBot
 
 
 fun main() {
-    TelegramChannel(templateBot, "630934328:AAFMitvk3doJJxAewTGdQF5tUEOO5raiirc").run()
+    TelegramChannel(templateBot, "1481559613:AAEYTeJGGKpGOH48XTvY5mW_CEo2GfUH7Q8").run()
 }

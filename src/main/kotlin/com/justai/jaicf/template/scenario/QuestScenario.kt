@@ -1,6 +1,7 @@
 package com.justai.jaicf.template.scenario
 
 import com.justai.jaicf.channel.aimybox.aimybox
+import com.justai.jaicf.channel.telegram.telegram
 import com.justai.jaicf.model.scenario.Scenario
 import com.justai.jaicf.template.StatusChange
 import com.justai.jaicf.template.scenario.MainScenario.questCases
@@ -15,7 +16,7 @@ object QuestScenario : Scenario() {
                 //
                 val stateInfo = Controller(context)
                 reactions.say("")
-                reactions.say(stateInfo.currentSituation.text)
+                reactions.telegram?.say(stateInfo.currentSituation.text, listOf("Да", "Нет"))
             }
 
             state("yes") {
