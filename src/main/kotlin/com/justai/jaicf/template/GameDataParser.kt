@@ -13,6 +13,7 @@ private const val YES_TRANSITION_COL = 4
 private const val NO_SCORE_COL = 5
 private const val NO_TEXT_COL = 6
 private const val NO_TRANSITION_COL = 7
+private const val INDEPENDENT = 7
 
 private fun parseScore(scoreData: String): List<Int> {
     return scoreData.split(SCORE_DELIMITER).map { it.toInt() }
@@ -31,6 +32,7 @@ private fun buildConsequence(scoreData: String, text: String, transition: String
 private fun parseRow(row: List<String>): Situation {
     return Situation(
         id = row[ID_COL].toInt(),
+        independent = row[INDEPENDENT].toBoolean(),
         text = row[TEXT_COL],
         tts = "",
         yesVariant = buildConsequence(row[YES_SCORE_COL], row[YES_TEXT_COL], row[YES_TRANSITION_COL]),

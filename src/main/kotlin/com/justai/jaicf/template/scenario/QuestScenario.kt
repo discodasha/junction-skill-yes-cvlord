@@ -52,7 +52,7 @@ object QuestScenario : Scenario() {
                 action {
                     val stateInfo = Controller(context)
                     val dissidentStatus = getDissidentStatus(stateInfo.dissidentScore, stateInfo.currentConsequence)
-                    val sectantStatus = getSectantStatus(stateInfo.dissidentScore, stateInfo.currentConsequence)
+                    val sectantStatus = getSectantStatus(stateInfo.sectantScore, stateInfo.currentConsequence)
 
                     if (dissidentStatus == StatusChange.TOO_LITTLE) {
                         reactions.go("/cases/TOO_LITTLE_DISSIDENT")
@@ -127,7 +127,7 @@ object QuestScenario : Scenario() {
                     reactions.say("Ваш уровень диссиденства стал настолько высок, " +
                             "что Билл Гейтс не смог это не заметить и вылетел вас чипировать. Чик-чик, голубчик.")
                     reactions.aimybox?.endConversation()
-                    reactions.go("/")
+                    reactions.go("/end")
                 }
             }
 
@@ -137,7 +137,7 @@ object QuestScenario : Scenario() {
                     reactions.say("Кажется, вы превратились в фанатичного сектанта!" +
                             " Осторожнее с антисептиком - ваши руки могут раствориться от такого количества спирта.")
                     reactions.aimybox?.endConversation()
-                    reactions.go("/")
+                    reactions.go("/end")
                 }
             }
 
@@ -147,7 +147,7 @@ object QuestScenario : Scenario() {
                     reactions.say("У-у-у, уважаемый, полегче! " +
                             "Если так пойдет дальше, то ваша психика не выдержит и ... Но давайте не будем о грустном.")
                     reactions.aimybox?.endConversation()
-                    reactions.go("/")
+                    reactions.go("/end")
                 }
             }
 
@@ -157,7 +157,7 @@ object QuestScenario : Scenario() {
                     reactions.say("Кажется, вы всё-таки оказались диким диссидентом... " +
                             "Остоновитесь, подумойте, а то вышки 5G на ваш порадиоактивят и всё!")
                     reactions.aimybox?.endConversation()
-                    reactions.go("/")
+                    reactions.go("/end")
                 }
             }
         }

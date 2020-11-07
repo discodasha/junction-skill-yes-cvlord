@@ -4,6 +4,7 @@ import com.justai.jaicf.template.scenario.Controller
 
 data class Situation (
     val id: Int,
+    val independent: Boolean,
     val text: String,
     val tts: String,
     val yesVariant: Consequence,
@@ -35,6 +36,7 @@ class QuestCases() {
 
         val situation = dateset
             .filter { usedCases.indexOf(it.id) == -1 }
+            .filter { !it.independent }
             .random()
         usedCases.add(situation.id)
         return situation
