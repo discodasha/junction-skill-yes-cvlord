@@ -87,13 +87,13 @@ object QuestScenario : Scenario() {
                     }
 
                     reactions.say(stateInfo.currentConsequence.text)
+                    reactions.say("Ваш $replyDissident ${stateInfo.dissidentScore}, " +
+                            "$replySectant ${stateInfo.sectantScore}.")
 
                     if (stateInfo.currentConsequence.transition == null) {
                         val s = questCases.getRandomSituation()
                         if (s != null) {
                             stateInfo.currentSituation = s
-                            reactions.say("Ваш $replyDissident ${stateInfo.dissidentScore}, " +
-                                    "$replySectant ${stateInfo.sectantScore}.")
                         }
                         else {
                             reactions.say("Вы - мастер выживания и морального спокойствия! " +
@@ -107,8 +107,6 @@ object QuestScenario : Scenario() {
                     }
                     else {
                         stateInfo.currentSituation = questCases.getNextSituation(stateInfo)
-                        reactions.say("Ваш $replyDissident -  ${stateInfo.dissidentScore}. " +
-                                "$replySectant, ваш уровень фанатизма - ${stateInfo.sectantScore}.")
                     }
 
                     reactions.go("/cases")

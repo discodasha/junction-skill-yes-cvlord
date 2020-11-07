@@ -4,7 +4,7 @@ import com.justai.jaicf.template.scenario.Controller
 
 data class Situation (
     val id: Int,
-    val independent: Boolean,
+    val independent: Int,
     val text: String,
     val tts: String,
     val yesVariant: Consequence,
@@ -27,7 +27,7 @@ enum class StatusChange {
 
 class QuestCases() {
     private val usedCases = mutableListOf<Int>()
-    private val dateset = parseGameData()
+    val dateset = parseGameData()
 
     fun getRandomSituation(): Situation? {
         if (usedCases.size == dateset.size) {
@@ -36,7 +36,7 @@ class QuestCases() {
 
         val situation = dateset
             .filter { usedCases.indexOf(it.id) == -1 }
-            .filter { !it.independent }
+            .filter { it.independent == 1 }
             .random()
         usedCases.add(situation.id)
         return situation

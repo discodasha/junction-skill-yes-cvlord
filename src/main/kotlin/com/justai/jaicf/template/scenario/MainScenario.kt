@@ -55,7 +55,7 @@ object MainScenario : Scenario(dependencies = listOf(QuestScenario)) {
                 }
 
                 action {
-                    reactions.go("start")
+                    reactions.go("/start")
                 }
             }
 
