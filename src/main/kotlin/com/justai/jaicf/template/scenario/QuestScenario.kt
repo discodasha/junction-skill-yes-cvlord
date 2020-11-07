@@ -3,8 +3,7 @@ package com.justai.jaicf.template.scenario
 import com.justai.jaicf.channel.aimybox.aimybox
 import com.justai.jaicf.model.scenario.Scenario
 import com.justai.jaicf.template.StatusChange
-import com.justai.jaicf.template.questCases
-
+import com.justai.jaicf.template.scenario.MainScenario.questCases
 
 object QuestScenario : Scenario() {
 
@@ -15,6 +14,7 @@ object QuestScenario : Scenario() {
             action {
                 //
                 val stateInfo = Controller(context)
+                reactions.say("")
                 reactions.say(stateInfo.currentSituation.text)
             }
 
@@ -73,26 +73,28 @@ object QuestScenario : Scenario() {
                     }
 
                     val replyDissident = when (dissidentStatus) {
-                        StatusChange.LESS -> "уровень диссиденства уменьшился"
-                        StatusChange.MORE -> "уровень диссиденства увеличился"
-                        StatusChange.STILL -> "уровень диссиденства не изменился"
+                        StatusChange.LESS -> "уровень диссиденства уменьшился до"
+                        StatusChange.MORE -> "уровень диссиденства увеличился до"
+                        StatusChange.STILL -> "уровень диссиденства не изменился и остался"
                         else -> null
                     }
 
                     val replySectant = when (sectantStatus) {
-                        StatusChange.LESS -> "уровень фанатизма уменьшился"
-                        StatusChange.MORE -> "уровень фанатизма увеличился"
-                        StatusChange.STILL -> "уровень фанатизма не изменился"
+                        StatusChange.LESS -> "уровень фанатизма уменьшился до"
+                        StatusChange.MORE -> "уровень фанатизма увеличился до"
+                        StatusChange.STILL -> "уровень фанатизма не изменился и остался"
                         else -> null
                     }
 
-                    reactions.say("Ваш $replyDissident,  ${stateInfo.dissidentScore}.")
-                    reactions.say("$replySectant, ваш уровень фанатизма - ${stateInfo.sectantScore}.")
+                    reactions.say(stateInfo.currentConsequence.text)
 
                     if (stateInfo.currentConsequence.transition == null) {
                         val s = questCases.getRandomSituation()
-                        if (s != null)
+                        if (s != null) {
                             stateInfo.currentSituation = s
+                            reactions.say("Ваш $replyDissident ${stateInfo.dissidentScore}, " +
+                                    "$replySectant ${stateInfo.sectantScore}.")
+                        }
                         else {
                             reactions.say("Вы - мастер выживания и морального спокойствия! " +
                                     "Просто представьте, сколько денег вы сэкономили на психотерапевтах и психиатрах! " +
@@ -103,8 +105,11 @@ object QuestScenario : Scenario() {
                             return@action
                         }
                     }
-                    else
+                    else {
                         stateInfo.currentSituation = questCases.getNextSituation(stateInfo)
+                        reactions.say("Ваш $replyDissident -  ${stateInfo.dissidentScore}. " +
+                                "$replySectant, ваш уровень фанатизма - ${stateInfo.sectantScore}.")
+                    }
 
                     reactions.go("/cases")
                 }
@@ -112,7 +117,7 @@ object QuestScenario : Scenario() {
 
 
             fallback {
-                reactions.say("Братец, не напрягай деда, скажи \"да\" или \"нет\"")
+                reactions.say("Братец, не напрягай деда, скажи \"да\" или \"нет\".")
             }
 
 

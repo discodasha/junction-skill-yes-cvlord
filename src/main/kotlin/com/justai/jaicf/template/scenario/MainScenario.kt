@@ -2,9 +2,13 @@ package com.justai.jaicf.template.scenario
 
 import com.justai.jaicf.model.scenario.Scenario
 import com.justai.jaicf.template.Consequence
-import com.justai.jaicf.template.questCases
+import com.justai.jaicf.template.QuestCases
+
+
 
 object MainScenario : Scenario(dependencies = listOf(QuestScenario)) {
+
+    val questCases =  QuestCases()
 
     init {
         state("start") {

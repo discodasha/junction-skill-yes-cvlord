@@ -47,4 +47,3 @@ class QuestCases() {
 
 }
 
-val questCases =  QuestCases()
