@@ -22,6 +22,7 @@ object QuestScenario : Scenario() {
             state("yes") {
                 activators {
                     regex("да")
+                    intent("Yes")
                 }
 
                 action {
@@ -35,7 +36,8 @@ object QuestScenario : Scenario() {
 
             state("no") {
                 activators {
-                    regex("да")
+                    regex("нет")
+                    intent("No")
                 }
 
                 action {

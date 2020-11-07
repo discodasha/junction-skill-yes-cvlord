@@ -23,6 +23,7 @@ object MainScenario : Scenario(dependencies = listOf(QuestScenario)) {
             state("letsgo") {
                 activators {
                     regex("да")
+                    intent("Yes")
                 }
 
                 action {

@@ -5,11 +5,14 @@
     "folder": "/"
   },
   "settings": {
-    "language": "en",
+    "language": "ru",
     "spellingCorrection": false,
     "classificationAlgorithm": "sts",
     "timezone": "UTC",
-    "shared": false
+    "shared": false,
+    "extendedSettings": {
+      "zflPatternsEnabled": true
+    }
   },
   "intents": [
     {
@@ -113,6 +116,26 @@
         }
       ],
       "patterns": []
+    },
+    {
+      "path": "/Yes",
+      "enabled": true,
+      "shared": false,
+      "phrases": [
+        {
+          "text": "@AGREEMENT"
+        }
+      ]
+    },
+    {
+      "path": "/No",
+      "enabled": true,
+      "shared": false,
+      "phrases": [
+        {
+          "text": "@NEGATION"
+        }
+      ]
     }
   ],
   "entities": [],
