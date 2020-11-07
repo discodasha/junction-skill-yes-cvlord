@@ -26,7 +26,7 @@ enum class StatusChange {
 
 class QuestCases() {
     private val usedCases = mutableListOf<Int>()
-    private val dateset = listOf(Situation(0,"Ситуация 1", "1111", cons1, cons2)) // TODO - init!
+    private val dateset = parseGameData()
 
     fun getRandomSituation(): Situation? {
         if (usedCases.size == dateset.size) {

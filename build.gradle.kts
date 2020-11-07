@@ -9,6 +9,7 @@ version = "1.0.0"
 
 val jaicf = "0.8.2"
 val logback = "1.2.3"
+val csv = "0.13.0"
 
 // Main class to run application on heroku. Either JaicpPollerKt, or JaicpServerKt. Will propagate to .jar main class.
 application {
@@ -26,6 +27,7 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
 
     implementation("ch.qos.logback:logback-classic:$logback")
+    implementation("com.github.doyaaaaaken:kotlin-csv-jvm:$csv")
 
     implementation("com.justai.jaicf:core:$jaicf")
     implementation("com.justai.jaicf:jaicp:$jaicf")
