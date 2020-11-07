@@ -2,7 +2,7 @@ package com.justai.jaicf.template
 
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 
-private const val GAME_DATA_FILE = "/resources/game-data.csv"
+private const val GAME_DATA_FILE = "src/main/resources/game-data.csv"
 private const val SCORE_DELIMITER = "/"
 
 private const val ID_COL = 0
